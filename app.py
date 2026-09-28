@@ -9,7 +9,7 @@ import requests
 
 from core import PracticeEngine
 
-st.set_page_config(page_title="Практическая работа №2", layout="centered", page_icon="📊")
+st.set_page_config(page_title="Практическая работа №2", layout="centered", page_icon="📈")
 
 def upload_to_google_drive(file_content, filename):
     try:
@@ -17,7 +17,7 @@ def upload_to_google_drive(file_content, filename):
         payload = {
             "filename": filename,
             "content": file_content,
-            "practice_num": "2"  # Маршрутизация в папку Практики №2 на Диске
+            "practice_num": "2"  # Маршрутизация в папку Практики №2
         }
         response = requests.post(web_app_url, json=payload, timeout=15)
         res_data = response.json()
@@ -39,8 +39,8 @@ if 'started' not in st.session_state:
     st.session_state.sent_to_cloud = False
 
 if not st.session_state.started:
-    st.title("📊 Практическая работа №2 - ТВиМС")
-    st.write("Дискретные случайные величины, числовые характеристики и схема Бернулли")
+    st.title("📈 Практическая работа №2 - ТВиМС")
+    st.write("Повторение испытаний. Формула Бернулли")
     
     with st.container():
         st.info("Введите номер вашей зачетной книжки для генерации индивидуального варианта.")
@@ -130,7 +130,6 @@ elif st.session_state.started and st.session_state.report_json is None:
         
         st.session_state.report_json = json.dumps(report_data, ensure_ascii=False, indent=4)
         time_tag = datetime.now().strftime("%d-%m-%Y_%H-%M-%S")
-        # Уникальный шаблон имени файла для второй практики
         st.session_state.filename = f"Practice_2_Student_{engine.student_id}_{time_tag}.json"
         st.rerun()
 
