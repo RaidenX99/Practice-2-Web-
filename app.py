@@ -9,22 +9,32 @@ import requests
 
 from core import PracticeEngine
 
-st.set_page_config(page_title="Практическая работа №2", layout="centered", page_icon="📈")
+st.set_page_config(page_title="Практическая работа №2", layout="centered", page_icon="📊")
 
 def upload_to_google_drive(file_content, filename):
     try:
+        # Актуальный общий URL скрипта
         web_app_url = "https://script.google.com/macros/s/AKfycbzZZVu9AaYHPKKGEXQ4C0QeTYMm1U0HdHQcq3sc6cLHFz9f5P3Ivdj_Wj3XgdrItzq5/exec"
         payload = {
             "filename": filename,
             "content": file_content,
-            "practice_num": "2"  # Маршрутизация в папку Практики №2
+            "practice_num": "2"  # Четкая маршрутизация в папку Практики №2
         }
-        response = requests.post(web_app_url, json=payload, timeout=60)
+        
+        response = requests.post(web_app_url, json=payload, timeout=45)
+        
+        if not response.text:
+            st.error("Ошибка: Google Apps Script вернул пустой ответ.")
+            return False
+            
         res_data = response.json()
         if res_data.get("status") == "success":
+            f_name = res_data.get("folderName", "Неизвестно")
+            p_num = res_data.get("receivedPractice", "Н/Д")
+            st.success(f"✅ Успешно! Файл записан в папку Google Диска: **«{f_name}»** (Практика №{p_num})")
             return True
         else:
-            st.error(f"Ошибка скрипта: {res_data.get('message')}")
+            st.error(f"Ошибка скрипта Google: {res_data.get('message')}")
             return False
     except Exception as e:
         st.error(f"Ошибка отправки на веб-приложение: {e}")
@@ -39,8 +49,8 @@ if 'started' not in st.session_state:
     st.session_state.sent_to_cloud = False
 
 if not st.session_state.started:
-    st.title("📈 Практическая работа №2 - ТВиМС")
-    st.write("Повторение испытаний. Формула Бернулли")
+    st.title("📊 Практическая работа №2 - ТВиМС")
+    st.write("Повторение испытаний. Формула Бернулли в ИКТ")
     
     with st.container():
         st.info("Введите номер вашей зачетной книжки для генерации индивидуального варианта.")
