@@ -17,7 +17,7 @@ def upload_to_google_drive(file_content, filename):
         payload = {
             "filename": filename,
             "content": file_content,
-            "practice_num": "2"  # Указываем цифру 2 для отправки в папку Практики №2
+            "practice_num": "2"  # Маршрутизация в папку Практики №2 на Диске
         }
         response = requests.post(web_app_url, json=payload, timeout=15)
         res_data = response.json()
@@ -130,7 +130,7 @@ elif st.session_state.started and st.session_state.report_json is None:
         
         st.session_state.report_json = json.dumps(report_data, ensure_ascii=False, indent=4)
         time_tag = datetime.now().strftime("%d-%m-%Y_%H-%M-%S")
-        # Уникальное имя файла с номером практики 2
+        # Уникальный шаблон имени файла для второй практики
         st.session_state.filename = f"Practice_2_Student_{engine.student_id}_{time_tag}.json"
         st.rerun()
 
