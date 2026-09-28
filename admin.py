@@ -7,7 +7,7 @@ from core import PracticeEngine
 st.set_page_config(page_title="Панель проверки - Практика 2", layout="wide", page_icon="🛡️")
 
 st.title("🛡️ Панель преподавателя - Практическая работа №2")
-st.write("Проверка отчетов студентов, верификация хэшей античита и просмотр рукописных решений.")
+st.write("Проверка отчетов студентов, верификация хэшей античита и просмотр рукописных решений по формуле Бернулли.")
 
 if 'admin_auth' not in st.session_state:
     st.session_state.admin_auth = False
